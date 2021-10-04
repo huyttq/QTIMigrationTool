@@ -593,6 +593,12 @@ class InstructureHelperContainer(QTIMetadataContainer):
 	def SetPointsPossible(self, points):
 		self.AddMetaField("points_possible", points)
 
+	def SetKsonData(self, data):
+		self.AddMetaField("kson_data", data)
+		
+	def SetIllustratingBackgroundUrl(self, data):
+		self.AddMetaField("illustrating_background_url", data)
+
 	def SetAssessmentQuestionIdentiferref(self, ref):
 		self.AddMetaField("assessment_question_identifierref", ref)
 	
@@ -2928,6 +2934,36 @@ class PointsPossible(CanvasBase):
 		if self.data:
 			self.container.SetPointsPossible(self.data)
 
+# kson_data
+# -----------
+#
+class KsonData(CanvasBase):
+	"""
+	<!ELEMENT kson_data (#PCDATA)>
+	"""
+	def __init__(self,name,attrs,parent):
+		CanvasBase.__init__(self, name, attrs, parent)
+
+	def CloseObject (self):
+		CanvasBase.CloseObject(self)
+		if self.data:
+			self.container.SetKsonData(self.data)
+			
+# illustrating_background_url
+# -----------
+#
+class IllustratingBackgroundUrl(CanvasBase):
+	"""
+	<!ELEMENT illustrating_background_url (#PCDATA)>
+	"""
+	def __init__(self,name,attrs,parent):
+		CanvasBase.__init__(self, name, attrs, parent)
+
+	def CloseObject (self):
+		CanvasBase.CloseObject(self)
+		if self.data:
+			self.container.SetIllustratingBackgroundUrl(self.data)
+
 # assessment_question_identifierref
 # -----------
 #
@@ -3241,6 +3277,8 @@ MDFieldMap={
 
 	# Custom Canvas fields
 	'points_possible':PointsPossible,
+	'kson_data':KsonData,
+	'illustrating_background_url':IllustratingBackgroundUrl,
 	'question_type':QMDItemType,
 	'bank_title':BankTitle,
 	'assessment_question_identifierref':AssessmentQuestionIdentiferref,
